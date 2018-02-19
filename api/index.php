@@ -69,7 +69,6 @@
 			}else{
 				$response = array('status'=>0);
 			}
-
 		}else if($action == 'get_pipe'){
 			$query = mysqli_query($conn, "SELECT * FROM pipedata ORDER BY time DESC LIMIT 1");
 			if($query){
@@ -88,12 +87,25 @@
 			if(!empty($data) && !empty($type)){
 
 			}else{}
+		}else if($action == 'field_info'){
+			//Getting data on field
+			$field = $request['field']??"";
+
+			$sql = "SELECT * FROM fields WHERE id = \"$field\" LIMIT 1 ";
+			$query = $conn->query($sql);
+			if($query){
+				$data = $query->fetch_assoc();
+				$response = array('status'=>true, $data);
+			}else{
+				$response = array('status'=>false, 'msg'=>"Error: $conn->error");
+			}
+
 		}else{
 			$response = array("status"=>0, 'error'=>'Action specified is unrecognized');
 		}
 	}else{
 		$response = array('status'=>0, 'error'=>"Specify action");
 	}
-	$new_response=array("data"=>$response);
+	$new_response = array("data"=>$response);
 	echo json_encode($new_response);
 ?>

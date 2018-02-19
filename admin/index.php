@@ -23,10 +23,15 @@
     <link href="../assets/plugins/chartist-plugin-tooltip-master/dist/chartist-plugin-tooltip.css" rel="stylesheet">
     <!--This page css - Morris CSS -->
     <link href="../assets/plugins/c3-master/c3.min.css" rel="stylesheet">
-    <!-- Custom CSS -->
-    <link href="css/style.css" rel="stylesheet">
+
+    <!-- Font awesome -->
+    <link rel="stylesheet" type="text/css" href="../css/facss/font-awesome.min.css">
+    
     <!-- You can change the theme colors from here -->
     <link href="css/colors/blue.css" id="theme" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="css/style.css" rel="stylesheet">
 </head>
 
 <body class="fix-header fix-sidebar card-no-border">
@@ -92,7 +97,7 @@
                         	$sysname = "Field ".$value['id'];
                         	$syslocation .= "{point:{".$value['location']."}, title:'$sysname', locationName:'".$value['locationName']."'},";
                            ?>
-                                <li><a class="waves-effect waves-dark litem sys-elem sys<?php echo $value['id']; ?>" href="#" aria-expanded="false" data-marker = "<?php echo "$sysname,'$value[locationName]"  ?>"><span><img class="img-responsive indic-item field-ico" src="../assets/images/crop_field.png"></span> <span><?php echo $sysname; ?></span> <span class="sys-status">&nbsp;</span></a>
+                                <li class="elem-cont"><a class="waves-effect waves-dark litem sys-elem sys<?php echo $value['id']; ?>" href="#" aria-expanded="false" data-marker = "<?php echo "$sysname,'$value[locationName]"  ?>" data-field="<?php echo $value['id']; ?>"><span><img class="img-responsive indic-item field-ico" src="../assets/images/crop_field.png"></span> <span><?php echo $sysname; ?></span> <span class="sys-status">&nbsp;</span></a>
                                 </li>
                            <?php
                         }
@@ -114,6 +119,9 @@
 	                    <div class="col-sm-12">
                             <!-- <h1>Systems Map</h1> -->
                             <div id="map"></div>
+                            <div id="field-view" class="display_none">
+                                <div class="field-nav"><span><i class="mdi mdi-backspace"></i></span data-fill='name'><span><i class="fa fa-cog"></i></span></div>
+                            </div>
                         </div>
                         <div class="col-sm-12">
                             <!-- <h1>Systems Map</h1> -->
@@ -276,7 +284,7 @@
     <!--Menu sidebar -->
     <script src="js/sidebarmenu.js"></script>
     <!--stickey kit -->
-    <script src="../assets/plugins/sticky-kit-master/dist/sticky-kit.min.js"></script>
+    <!-- <script src="../assets/plugins/sticky-kit-master/dist/sticky-kit.min.js"></script> -->
     <!--Custom JavaScript -->
     <script src="js/custom.min.js"></script>
     <!-- ============================================================== -->
@@ -287,7 +295,7 @@
     <script src="../assets/plugins/chartist-plugin-tooltip-master/dist/chartist-plugin-tooltip.min.js"></script>
     <!--c3 JavaScript -->
     <script src="../assets/plugins/d3/d3.min.js"></script>
-    <script src="../assets/plugins/c3-master/c3.min.js"></script>
+    <script src="../assets/plugins/c3-master/c3.min.js"></script> -->
     <!-- Chart JS -->
     <script src="js/dashboard1.js"></script>
     <script src="js/highcharts.js"></script>
@@ -398,18 +406,41 @@
 
 <script type="text/javascript">
     $(".sys-elem").on('click', function(){
-        alert("lddfdfd")
-        return 0;
         data = $(this).data('marker');
         str = data.split(",'")
         data = {'data':{'name':str[0], 'locationName':str[1]}};
+        fieldid = $(this).data('field');
+        return showField(fieldid);
         mapModal(data);
     });
 
     $(".men-nav").on("click", function(){
         $("#sysdet").hide('100');
         $("#map").show(200);
-    })
+    });
+
+    function showField(fieldid){
+        //Shows summary of the field
+        field_elem = $("#field-view");
+        $("#map").css('height', '400px');
+        field_elem.removeClass('display_none');
+
+        $.post('../api/index.php', {action:'field_info', 'field':fieldid}, function(data){
+            try{
+                ret = JSON.parse(data);
+                ret = ret.data;
+
+                if(ret.status){
+                    
+                }else{
+                    alert(ret.msg)
+                }
+            }catch(err){
+                console.log(err)
+            }
+        });
+
+    }
 </script>
 
 <?php

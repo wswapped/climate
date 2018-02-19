@@ -7,5 +7,5 @@
 	// 	mysqli_select_db($conn, 'id235756_comwork') or die("Database acesss error: ".mysqli_error($conn));
 	// }
 
-	$conn = new mysqli('localhost', 'edoricac_aqvert', 'aquavert', 'edoricac_aqvert');
+	$conn = new mysqli('localhost', 'edoricac_aqvert', 'aquavert', 'climate');
 ?>

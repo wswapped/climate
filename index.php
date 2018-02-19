@@ -11,7 +11,7 @@
         <link rel="stylesheet" type="text/css" href="css/facss/font-awesome.min.css">
         <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="css/style.css">
-        <title>Marinzara | Murakaza neza</title>
+        <title>Marinzara</title>
     </head>
     <?php
         include 'admin/db.php';
@@ -22,20 +22,40 @@
             <div class="mt-3"></div>
             <div class="row no-gutters">
                 <div class="col-md-4">
-                    <ul class="list-group">
-                        <li class="list-group-item active">Imirima</li>
-                        <?php
-                            $systems = array();
-                            $query = $conn->query("SELECT * FROM systems WHERE ownerId = 1 ") or die("error getting systems $conn->error");
-                            while ($data = $query->fetch_assoc()) {
-                                $systems[$data['id']] = $data;
-                                ?>
-                                <li class="list-group-item"><a href="index.php?umurima=<?php echo $data['id']; ?>" class="no-deco"> <?php echo $data['name']; ?></a></li>
+                    <div class="card">
+                        <div class="card-text">
+                            <div class="card-title">Fields</div>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                      <th scope="col">#</th>
+                                      <th scope="col">Owner Name</th>
+                                      <th scope="col">Phone</th>
+                                      <th scope="col">Message</th>
+                                    </tr>
+                                </thead>
+                                <tbody>                            
                                 <?php
-                            } 
-                        ?>
-
-                    </ul>
+                                    $fields = array();
+                                    $query = $conn->query("SELECT * FROM fields WHERE ownerId = 1 ") or die("error getting fields $conn->error");
+                                    $n = 0;
+                                    while ($data = $query->fetch_assoc()) {
+                                        $fields[$data['id']] = $data;
+                                        ?>
+                                        <tr>
+                                          <th scope="row"><?php echo $n+1; ?></th>
+                                          <td><?php echo $data['ownerName']; ?></td>
+                                          <td><?php echo $data['phone']; ?></td>
+                                          <td>@fat</td>
+                                        </tr>
+                                        <?php
+                                    } 
+                                ?>                        
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
                 </div>
                 <div class="col-md-8">
                     <div class="">
