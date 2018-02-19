@@ -27,5 +27,12 @@
 
 		return $systems;
 	}
+	function next_message($field){
+		//Next message to be sent
+		global $conn;
+
+		$query = $conn->query("SELECT * FROM field_messages JOIN messages ON field_messages.message = messages.id WHERE field_messages.field = \"$field\" LIMIT 1");
+		return $query->fetch_assoc();
+	}
 
 ?>

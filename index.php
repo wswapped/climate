@@ -15,16 +15,17 @@
     </head>
     <?php
         include 'admin/db.php';
+        include_once "functions.php";
     ?>
 <body>
     <div class="page">
         <div class="container">
             <div class="mt-3"></div>
-            <div class="row no-gutters">
-                <div class="col-md-4">
+            <div class="row">
+                <div class="col-md-8">
                     <div class="card">
-                        <div class="card-text">
-                            <div class="card-title">Fields</div>
+                        <div class="card-block card-body">
+                            <div class="card-title text-center">Fields</div>
                             <table class="table">
                                 <thead>
                                     <tr>
@@ -32,6 +33,7 @@
                                       <th scope="col">Owner Name</th>
                                       <th scope="col">Phone</th>
                                       <th scope="col">Message</th>
+                                      <th scope="col">Send now</th>
                                     </tr>
                                 </thead>
                                 <tbody>                            
@@ -41,14 +43,23 @@
                                     $n = 0;
                                     while ($data = $query->fetch_assoc()) {
                                         $fields[$data['id']] = $data;
+                                        $ownerName = $data['ownerName']??"Muhinzi";
+
+                                        //getting message
+                                        $next_message = next_message($data['id']);
+                                        $nmessage = $next_message['text'];
+
+                                        $message = str_ireplace("\$name", $ownerName, $nmessage);
                                         ?>
                                         <tr>
                                           <th scope="row"><?php echo $n+1; ?></th>
                                           <td><?php echo $data['ownerName']; ?></td>
                                           <td><?php echo $data['phone']; ?></td>
-                                          <td>@fat</td>
+                                          <td><?php echo substr($message, 0, 15) ?>..</td>
+                                          <td><button class="btn btn-info">Send <i class="fa fa-envelope"></i></button></td>
                                         </tr>
                                         <?php
+                                        $n++;
                                     } 
                                 ?>                        
                                 </tbody>
@@ -57,11 +68,11 @@
                     </div>
                     
                 </div>
-                <div class="col-md-8">
+                <div class="col-md-4">
                     <div class="">
                         <div class="card home-intro-cont">
                         <div class="card-body home-intro">
-                            <h5 class="card-title">Imitere n'umusaruro </h5>
+                            <h5 class="card-title">Suppliers</h5>
                             <?php
                                 $umurima = $_GET['umurima']??'';
                                 if($umurima){
