@@ -3,6 +3,7 @@
 <?php
     include_once('db.php');
     include_once('function.php');
+    $product_name = "Climate"
 ?>
 <head>
     <meta charset="utf-8">
@@ -13,7 +14,7 @@
     <meta name="author" content="aqvert team">
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon.png">
-    <title>AquaVert</title>
+    <title><?php echo $product_name ?></title>
     <!-- Bootstrap Core CSS -->
     <link href="../assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <!-- chartist CSS -->
@@ -50,7 +51,7 @@
                 <!-- ============================================================== -->
                 <div class="navbar-header">
                     <a class="navbar-brand" href="index.php">
-                        <p class="logoname">AquaVert</p>
+                        <p class="logoname"><?php echo $product_name ?></p>
                     </a>
                 </div>
                 <div class="navbar-collapse">
@@ -58,7 +59,7 @@
                     <!-- toggle and nav items -->
                     <!-- ============================================================== -->
                     <ul class="navbar-nav mr-auto mt-md-0">
-                    	<li id="head-title">Systems Map</li>
+                    	<li id="head-title">Fields Map</li>
                     </ul>
                     <!-- ============================================================== -->
                     <!-- User profile and search -->
@@ -68,7 +69,7 @@
                         <!-- Profile -->
                         <!-- ============================================================== -->
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="javascript:void()" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="../assets/images/users/1.jpg" alt="user" class="profile-pic m-r-10" />H Placide</a>
+                            <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="javascript:void()" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="../assets/images/users/hp_climate.jpg" alt="user" class="profile-pic m-r-10" />H Placide</a>
                         </li>
                     </ul>
                 </div>
@@ -80,7 +81,7 @@
                 <!-- Sidebar navigation-->
                 <nav class="sidebar-nav">
                     <div class="sys-title">
-                        <h2>Our Systems</h2>
+                        <h2>Fields</h2>
                     </div>
                     <ul id="sidebarnav">
                     <?php
@@ -88,10 +89,10 @@
                         $syslocation = "";
 
                         foreach ($Systems as $value) {
-                        	$sysname = "HYDRO".$value['id'];
+                        	$sysname = "Field ".$value['id'];
                         	$syslocation .= "{point:{".$value['location']."}, title:'$sysname', locationName:'".$value['locationName']."'},";
                            ?>
-                                <li><a class="waves-effect waves-dark litem sys-elem sys<?php echo $value['id']; ?>" href="#" aria-expanded="false" data-marker = "<?php echo "$sysname,'$value[locationName]"  ?>"><span><img class="img-responsive indic-item" src="../assets/images/hydro-icon.png"></span> <span><?php echo $sysname; ?></span> <span class="sys-status">&nbsp;</span></a>
+                                <li><a class="waves-effect waves-dark litem sys-elem sys<?php echo $value['id']; ?>" href="#" aria-expanded="false" data-marker = "<?php echo "$sysname,'$value[locationName]"  ?>"><span><img class="img-responsive indic-item field-ico" src="../assets/images/crop_field.png"></span> <span><?php echo $sysname; ?></span> <span class="sys-status">&nbsp;</span></a>
                                 </li>
                            <?php
                         }
@@ -137,7 +138,7 @@
 	                </div>
 	            </div>
         	</div>            
-            <footer class="footer"> © 2017 AquaVert</footer>
+            <footer class="footer"> © <?php echo date("Y")." - $product_name" ?></footer>
         </div>
         <div>
             
@@ -397,6 +398,8 @@
 
 <script type="text/javascript">
     $(".sys-elem").on('click', function(){
+        alert("lddfdfd")
+        return 0;
         data = $(this).data('marker');
         str = data.split(",'")
         data = {'data':{'name':str[0], 'locationName':str[1]}};
