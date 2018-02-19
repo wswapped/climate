@@ -1,0 +1,28 @@
+[17-Dec-2017 13:22:40 Etc/GMT] PHP Warning:  mysqli_connect(): (28000/1045): Access denied for user 'root'@'localhost' (using password: NO) in /home/marieadelaidesch/public_html/aqvert/admin/db.php on line 2
+[17-Dec-2017 13:22:40 Etc/GMT] PHP Warning:  mysqli_connect(): (28000/1045): Access denied for user 'id235756_ok'@'localhost' (using password: YES) in /home/marieadelaidesch/public_html/aqvert/admin/db.php on line 6
+[17-Dec-2017 13:22:40 Etc/GMT] PHP Warning:  mysqli_select_db() expects parameter 1 to be mysqli, boolean given in /home/marieadelaidesch/public_html/aqvert/admin/db.php on line 7
+[17-Dec-2017 13:22:40 Etc/GMT] PHP Warning:  mysqli_error() expects parameter 1 to be mysqli, boolean given in /home/marieadelaidesch/public_html/aqvert/admin/db.php on line 7
+[17-Dec-2017 13:22:41 Etc/GMT] PHP Warning:  mysqli_connect(): (28000/1045): Access denied for user 'root'@'localhost' (using password: NO) in /home/marieadelaidesch/public_html/aqvert/admin/db.php on line 2
+[17-Dec-2017 13:22:41 Etc/GMT] PHP Warning:  mysqli_connect(): (28000/1045): Access denied for user 'id235756_ok'@'localhost' (using password: YES) in /home/marieadelaidesch/public_html/aqvert/admin/db.php on line 6
+[17-Dec-2017 13:22:41 Etc/GMT] PHP Warning:  mysqli_select_db() expects parameter 1 to be mysqli, boolean given in /home/marieadelaidesch/public_html/aqvert/admin/db.php on line 7
+[17-Dec-2017 13:22:41 Etc/GMT] PHP Warning:  mysqli_error() expects parameter 1 to be mysqli, boolean given in /home/marieadelaidesch/public_html/aqvert/admin/db.php on line 7
+[17-Dec-2017 13:22:42 Etc/GMT] PHP Warning:  mysqli_connect(): (28000/1045): Access denied for user 'root'@'localhost' (using password: NO) in /home/marieadelaidesch/public_html/aqvert/admin/db.php on line 2
+[17-Dec-2017 13:22:42 Etc/GMT] PHP Warning:  mysqli_connect(): (28000/1045): Access denied for user 'id235756_ok'@'localhost' (using password: YES) in /home/marieadelaidesch/public_html/aqvert/admin/db.php on line 6
+[17-Dec-2017 13:22:42 Etc/GMT] PHP Warning:  mysqli_select_db() expects parameter 1 to be mysqli, boolean given in /home/marieadelaidesch/public_html/aqvert/admin/db.php on line 7
+[17-Dec-2017 13:22:42 Etc/GMT] PHP Warning:  mysqli_error() expects parameter 1 to be mysqli, boolean given in /home/marieadelaidesch/public_html/aqvert/admin/db.php on line 7
+[17-Dec-2017 13:22:43 Etc/GMT] PHP Warning:  mysqli_connect(): (28000/1045): Access denied for user 'root'@'localhost' (using password: NO) in /home/marieadelaidesch/public_html/aqvert/admin/db.php on line 2
+[17-Dec-2017 13:22:43 Etc/GMT] PHP Warning:  mysqli_connect(): (28000/1045): Access denied for user 'id235756_ok'@'localhost' (using password: YES) in /home/marieadelaidesch/public_html/aqvert/admin/db.php on line 6
+[17-Dec-2017 13:22:43 Etc/GMT] PHP Warning:  mysqli_select_db() expects parameter 1 to be mysqli, boolean given in /home/marieadelaidesch/public_html/aqvert/admin/db.php on line 7
+[17-Dec-2017 13:22:43 Etc/GMT] PHP Warning:  mysqli_error() expects parameter 1 to be mysqli, boolean given in /home/marieadelaidesch/public_html/aqvert/admin/db.php on line 7
+[17-Dec-2017 13:22:44 Etc/GMT] PHP Warning:  mysqli_connect(): (28000/1045): Access denied for user 'root'@'localhost' (using password: NO) in /home/marieadelaidesch/public_html/aqvert/admin/db.php on line 2
+[17-Dec-2017 13:22:44 Etc/GMT] PHP Warning:  mysqli_connect(): (28000/1045): Access denied for user 'id235756_ok'@'localhost' (using password: YES) in /home/marieadelaidesch/public_html/aqvert/admin/db.php on line 6
+[17-Dec-2017 13:22:44 Etc/GMT] PHP Warning:  mysqli_select_db() expects parameter 1 to be mysqli, boolean given in /home/marieadelaidesch/public_html/aqvert/admin/db.php on line 7
+[17-Dec-2017 13:22:44 Etc/GMT] PHP Warning:  mysqli_error() expects parameter 1 to be mysqli, boolean given in /home/marieadelaidesch/public_html/aqvert/admin/db.php on line 7
+[17-Dec-2017 13:22:45 Etc/GMT] PHP Warning:  mysqli_connect(): (28000/1045): Access denied for user 'root'@'localhost' (using password: NO) in /home/marieadelaidesch/public_html/aqvert/admin/db.php on line 2
+[17-Dec-2017 13:22:45 Etc/GMT] PHP Warning:  mysqli_connect(): (28000/1045): Access denied for user 'id235756_ok'@'localhost' (using password: YES) in /home/marieadelaidesch/public_html/aqvert/admin/db.php on line 6
+[17-Dec-2017 13:22:45 Etc/GMT] PHP Warning:  mysqli_select_db() expects parameter 1 to be mysqli, boolean given in /home/marieadelaidesch/public_html/aqvert/admin/db.php on line 7
+[17-Dec-2017 13:22:45 Etc/GMT] PHP Warning:  mysqli_error() expects parameter 1 to be mysqli, boolean given in /home/marieadelaidesch/public_html/aqvert/admin/db.php on line 7
+[17-Dec-2017 13:22:46 Etc/GMT] PHP Warning:  mysqli_connect(): (28000/1045): Access denied for user 'root'@'localhost' (using password: NO) in /home/marieadelaidesch/public_html/aqvert/admin/db.php on line 2
+[17-Dec-2017 13:22:46 Etc/GMT] PHP Warning:  mysqli_connect(): (28000/1045): Access denied for user 'id235756_ok'@'localhost' (using password: YES) in /home/marieadelaidesch/public_html/aqvert/admin/db.php on line 6
+[17-Dec-2017 13:22:46 Etc/GMT] PHP Warning:  mysqli_select_db() expects parameter 1 to be mysqli, boolean given in /home/marieadelaidesch/public_html/aqvert/admin/db.php on line 7
+[17-Dec-2017 13:22:46 Etc/GMT] PHP Warning:  mysqli_error() expects parameter 1 to be mysqli, boolean given in /home/marieadelaidesch/public_html/aqvert/admin/db.php on line 7

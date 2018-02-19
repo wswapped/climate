@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>kljd</title>
+</head>
+<body>
+	<div id="result"></div>
+	<script type="text/javascript">
+		var source = new EventSource("demo_sse.php?ok");
+		source.onmessage = function(event) {
+		    document.getElementById("result").innerHTML += event.data + "<br>";
+		};
+	</script>
+</body>
+</html>

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Bot for data</title>
+</head>
+<body>
+	<script type="text/javascript">
+		setInterval(function(){
+			$.get('loaddata.php', function(data, status){
+				$("#log").text(data)
+			})
+		}, 1000)
+		
+	</script>
+	<div id="log">
+		
+	</div>
+	<script src="../assets/plugins/jquery/jquery.min.js"></script>
+</body>
+</html>
