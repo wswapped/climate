@@ -33,7 +33,7 @@
                                       <th scope="col">Owner Name</th>
                                       <th scope="col">Phone</th>
                                       <th scope="col">Message</th>
-                                      <th scope="col">Send now</th>
+                                      <!-- <th scope="col">Send now</th> -->
                                     </tr>
                                 </thead>
                                 <tbody>                            
@@ -49,24 +49,30 @@
                                         $next_message = next_message($data['id']);
                                         $nmessage = $next_message['text'];
 
-                                        $message = str_ireplace("\$name", $ownerName, $nmessage);
+                                        $message = str_ireplace("\$name", $ownerName, str_ireplace("\$litters", rand(10, 20), 
+                                            str_ireplace("\$fert_kg", rand(6, 9), $nmessage)));
                                         ?>
-                                        <tr>
+                                        <tr data-message="<?php echo $message; ?>" data-phone="<?php echo $data['phone']; ?>">
                                           <th scope="row"><?php echo $n+1; ?></th>
                                           <td><?php echo $data['ownerName']; ?></td>
-                                          <td><?php echo $data['phone']; ?></td>
+                                          <td data-role='phone'><?php echo $data['phone']; ?></td>
                                           <td><?php echo substr($message, 0, 15) ?>..</td>
-                                          <td><button class="btn btn-info">Send <i class="fa fa-envelope"></i></button></td>
+                                          <!-- <td><button class="btn btn-info" >Send <i class="fa fa-envelope"></i></button></td> -->
                                         </tr>
                                         <?php
                                         $n++;
                                     } 
-                                ?>                        
+                                ?>
+                                    <tr>
+                                        <th scope="row"></th>
+                                        <td></td>
+                                        <td data-role='phone'></td>
+                                        <td><button class="btn btn-info" id="sendbroadcasts" data-message="<?php echo $message; ?>">Bulk Send <i class="fa fa-envelope"></i></button></td>
+                                    </tr>                
                                 </tbody>
                             </table>
                         </div>
-                    </div>
-                    
+                    </div>                   
                 </div>
                 <div class="col-md-4">
                     <div class="">
@@ -137,6 +143,27 @@
     <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
     <script type="text/javascript" src="js/popper.min.js"></script>
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        $("#sendbroadcasts").on('click', function(){
+            //getting messages to send
+            messages_elem = $(this).parents("table").find("tr:not(:last-child)");
+
+            //Looping through messages
+            for(n=0; n<messages_elem.length; n++){
+                message_elem = messages_elem[n]
+                message = $(message_elem).data('message');
+                phone = $(message_elem).data('phone');
+
+                $.post('api/index.php', {action:'send_sms', phone:phone, message:message}, function(data){
+                    console.log(data)
+                })
+            }
+        });
+
+        function log(data){
+            console.log(data)
+        }
+    </script>
 </body>
 
 </html>

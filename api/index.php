@@ -2,6 +2,7 @@
 	$request = array_merge($_POST, $_GET); //Storing request variables
 	$response ='';
 	include_once "../admin/db.php";
+	include_once "../functions.php";
 	if(!empty($request['action'])){
 		$action = $request['action'];
 
@@ -99,7 +100,16 @@
 			}else{
 				$response = array('status'=>false, 'msg'=>"Error: $conn->error");
 			}
+		}else if($action == 'send_sms'){
+			//Getting data on field
+			$phone = $request['phone']??0;
+			$message = $request['message']??"";
 
+			if($phone && $message){
+				//Sending the message
+				$sms = sendsms($phone, $message);
+				var_dump($sms);
+			}
 		}else{
 			$response = array("status"=>0, 'error'=>'Action specified is unrecognized');
 		}
