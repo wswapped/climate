@@ -56,7 +56,6 @@
         $result = curl_exec($ch);
         $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         curl_close($ch);
-        var_dump($result);
                 
         if($httpcode == 200)
         {
