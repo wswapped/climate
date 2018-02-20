@@ -25,7 +25,7 @@
                 <div class="col-md-8">
                     <div class="card">
                         <div class="card-block card-body">
-                            <div class="card-title text-center">Fields</div>
+                            <div class="card-title text-center display-4">Fields and Alerts</div>
                             <table class="table">
                                 <thead>
                                     <tr>
@@ -78,46 +78,75 @@
                     <div class="">
                         <div class="card home-intro-cont">
                         <div class="card-body home-intro">
-                            <h5 class="card-title">Suppliers</h5>
-                            <?php
-                                $umurima = $_GET['umurima']??'';
-                                if($umurima){
-                                    ?>
-                                        <div class="row">
-                                            <div class="col-md-4">
-                                                <ul class="list-group">
-                                                    <li class="list-group-item text-primary">Amakuru ku murima</li>
-                                                    <li class="list-group-item">Ubugari: cm <?php echo $systems[$umurima]['width']; ?></li>
-                                                    <li class="list-group-item">Uburebure: <?php echo $systems[$umurima]['stages']; ?></li>
-                                                    <li class="list-group-item">Umusaruro wose: <?php echo $systems[$umurima]['total_produce']; ?></li>
-                                                    <li class="list-group-item">Umubare w'ibihingwa: </li>
-                                                    <li class="list-group-item">Igihe kindi cyo gusarura: <i><?php echo date("d-m-Y", strtotime(date("d-m-Y"). ' + 4 days')) ?></i></li>
-                                                </ul>
-                                            </div>
-                                            <div class="col-md-8">
-                                                <h1><?php echo $systems[$umurima]['name']; ?></h1>
-                                                <div class="mb-5"></div>
-                                                <p>Umurima wawe ugenewe: <i class="text-primary"><?php echo $systems[$umurima]['purpose']; ?></i></p>
-                                                <p>Ubwoko bw'umurima: <i class="text-primary"><?php echo $systems[$umurima]['type']; ?></i></p>
-
-                                                <a href="admin" class="btn btn-primary umurima-cta">Kurikirana umurima</a>
-                                            </div>
-                                        </div>
-                                    <?php
-                                }else{
-                                    ?>
-                                        <p class="card-text">Murakaza neza ku rubuga rw'ubuhinzi bwanyu. Mushobora kumenyera hano ibijyanye n'ubuhinzi, mukabona inama ku mirima y'impagaricye</p>
-                                        <p>Ushobora kandi no gutangira gucuruza, guteganyiriza umuryango ndetse no kureba amakuru yimbitse</p>
-                                    <?php
-                                }
-                            ?>                        
+                            <h5 class="card-title">Climate & Predictions</h5>
+                            <p class="text-muted">
+                                Here we'll predict the climate on fields, show alertson predictions and be ready to broadcast them on demand
+                            </p>                        
                         </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="container-fluid menu-stick-footer container-full">
+        <div class="mt-3"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-block card-body">
+                            <div class="card-title display-4">Fertilizer supply requests</div>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                      <th scope="col">#</th>
+                                      <th scope="col">Field owner</th>
+                                      <th scope="col">Fertilizer</th>
+                                      <th scope="col">Quantity</th>
+                                      <th scope="col">Date needed</th>
+                                    </tr>
+                                </thead>
+                                <tbody>                            
+                                <?php
+                                    $fields = array();
+                                    $query = $conn->query("SELECT * FROM field_fertilizer JOIN fertilizer ON field_fertilizer.fertilizer = fertilizer.id JOIN fields ON field_fertilizer.field = fields.id ") or die("error getting fields $conn->error");
+                                    $n = 0;
+                                    while ($data = $query->fetch_assoc()) {
+                                        $fields[$data['id']] = $data;
+                                        $ownerName = $data['ownerName']??"Muhinzi";
+
+                                        //getting message
+                                        $next_message = next_message($data['id']);
+                                        $nmessage = $next_message['text'];
+
+                                        $message = str_ireplace("\$name", $ownerName, str_ireplace("\$litters", rand(10, 20), 
+                                            str_ireplace("\$fert_kg", rand(6, 9), $nmessage)));
+                                        ?>
+                                        <tr data-message="<?php echo $message; ?>" data-phone="<?php echo $data['phone']; ?>">
+                                          <th scope="row"><?php echo $n+1; ?></th>
+                                          <td><?php echo $data['ownerName']; ?></td>
+                                          <td data-role='phone'><?php echo $data['name']; ?></td>
+                                          <td><?php echo $data['quantity']; ?> kg</td>
+                                          <td><?php echo $data['date_needed']; ?></td>
+                                        </tr>
+                                        <?php
+                                        $n++;
+                                    } 
+                                ?>
+                                    <tr>
+                                        <th scope="row"></th>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td><button class="btn btn-info" id="sendbroadcasts" data-message="<?php echo $message; ?>">Take Requests <i class="fa fa-envelope"></i></button></td>
+                                    </tr>                
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- <div class="container-fluid menu-stick-footer container-full">
             <div class="container">
                 <div class="row no-gutters">
                     <div class="col col-4">
@@ -137,7 +166,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
     </div>
 
     <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
