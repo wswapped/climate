@@ -26,21 +26,21 @@
                 <div class="col-md-8">
                     <div class="card">
                         <div class="card-block card-body">
-                            <div class="card-title text-center mod-title">Fields and Alerts</div>
+                            <div class="card-title text-center mod-title">Location crops</div>
                             <table class="table">
                                 <thead>
                                     <tr>
                                       <th scope="col">#</th>
-                                      <th scope="col">Owner Name</th>
-                                      <th scope="col">Phone</th>
-                                      <th scope="col">Message</th>
-                                      <!-- <th scope="col">Send now</th> -->
+                                      <th scope="col">Location</th>
+                                      <th scope="col">Crops</th>
+                                      <th scope="col">Quantity (kg)</th>
+                                      <th scope="col">Status</th>
                                     </tr>
                                 </thead>
                                 <tbody>                            
                                 <?php
                                     $fields = array();
-                                    $query = $conn->query("SELECT * FROM fields WHERE ownerId = 1 ") or die("error getting fields $conn->error");
+                                    $query = $conn->query("SELECT * FROM locations") or die("error getting fields $conn->error");
                                     $n = 0;
                                     while ($data = $query->fetch_assoc()) {
                                         $fields[$data['id']] = $data;
@@ -53,33 +53,28 @@
                                         $message = str_ireplace("\$name", $ownerName, str_ireplace("\$litters", rand(10, 20), 
                                             str_ireplace("\$fert_kg", rand(6, 9), $nmessage)));
                                         ?>
-                                        <tr data-message="<?php echo $message; ?>" data-phone="<?php echo $data['phone']; ?>">
+                                        <tr class="locElem">
                                           <th scope="row"><?php echo $n+1; ?></th>
-                                          <td><?php echo $data['ownerName']; ?></td>
-                                          <td data-role='phone'><?php echo $data['phone']; ?></td>
-                                          <td><?php echo substr($message, 0, 15) ?>..</td>
-                                          <!-- <td><button class="btn btn-info" >Send <i class="fa fa-envelope"></i></button></td> -->
+                                          <td><?php echo $data['name']; ?></td>
+                                          <td><?php echo $data['crops']; ?></td>
+                                          <td><?php echo $data['quantity']; ?></td>
+                                          <td>Notified</td>
                                         </tr>
                                         <?php
                                         $n++;
                                     } 
                                 ?>
-                                <tr>
-                                    <th scope="row">+</th>
-                                    <td id="nameInput"><input type="text" name="owner" placeholder="Ownername" class="form-control" /></td>
-                                    <td id="phoneInput"><input type="number" name="phone" placeholder="Phone number" class="form-control" /></td>
-                                    <td><button class="btn btn-default" id="addUser">Add <i class="fa fa-plus"></i></button></td>
-                                </tr> 
                                     <tr>
                                         <th scope="row"></th>
                                         <td></td>
                                         <td data-role='phone'></td>
-                                        <td><button class="btn btn-info" id="sendbroadcasts" data-message="<?php echo $message; ?>">Bulk Send <i class="fa fa-envelope"></i></button></td>
+                                        <td></td>
+                                        <td><button class="btn btn-info" id="sendbroadcasts" data-message="<?php echo $message; ?>">Confirm <i class="fa fa-check"></i></button></td>
                                     </tr>                
                                 </tbody>
                             </table>
                         </div>
-                    </div>                   
+                    </div>               
                 </div>
             </div>
         </div>
@@ -94,7 +89,7 @@
                     </div>
                     <div class="col col-4">
                         <div class="menu-item">
-                            <a href="market.php"><span><i class="fa fa-2x fa-shopping-basket"> </i></span> Resources</a>
+                            <a href="fertilizer.php"><span><i class="fa fa-2x fa-shopping-basket"> </i></span> Resources</a>
                         </div>
                     </div>
                     <div class="col col-4">
@@ -106,24 +101,94 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="addModal">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Add <span data-fill='name'></span></h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <p>Modal body text goes here.</p>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-primary">Save changes</button>
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          </div>
+    
+    <div class="modal fade" id="locModal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+            <div class="modal-body">
+                <div class="card">
+                    <div class="card-block card-body">
+                        <div class="card-title text-center mod-title">Fields and Alerts</div>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                  <th scope="col">#</th>
+                                  <th scope="col">Owner Name</th>
+                                  <th scope="col">Phone</th>
+                                  <th scope="col">Message</th>
+                                  <!-- <th scope="col">Send now</th> -->
+                                </tr>
+                            </thead>
+                            <tbody>                            
+                            <?php
+                                $fields = array();
+                                $query = $conn->query("SELECT * FROM fields WHERE ownerId = 1 ") or die("error getting fields $conn->error");
+                                $n = 0;
+                                while ($data = $query->fetch_assoc()) {
+                                    $fields[$data['id']] = $data;
+                                    $ownerName = $data['ownerName']??"Muhinzi";
+
+                                    //getting message
+                                    $next_message = next_message($data['id']);
+                                    $nmessage = $next_message['text'];
+
+                                    $message = str_ireplace("\$name", $ownerName, str_ireplace("\$litters", rand(10, 20), 
+                                        str_ireplace("\$fert_kg", rand(6, 9), $nmessage)));
+                                    ?>
+                                    <tr data-message="<?php echo $message; ?>" data-phone="<?php echo $data['phone']; ?>">
+                                      <th scope="row"><?php echo $n+1; ?></th>
+                                      <td><?php echo $data['ownerName']; ?></td>
+                                      <td data-role='phone'><?php echo $data['phone']; ?></td>
+                                      <td><?php echo substr($message, 0, 15) ?>..</td>
+                                      <!-- <td><button class="btn btn-info" >Send <i class="fa fa-envelope"></i></button></td> -->
+                                    </tr>
+                                    <?php
+                                    $n++;
+                                } 
+                            ?>
+                            <tr>
+                                <th scope="row">+</th>
+                                <td id="nameInput"><input type="text" name="owner" placeholder="Ownername" class="form-control" /></td>
+                                <td id="phoneInput"><input type="number" name="phone" placeholder="Phone number" class="form-control" /></td>
+                                <td><button class="btn btn-default" id="addUser">Add <i class="fa fa-plus"></i></button></td>
+                            </tr> 
+                                <tr>
+                                    <th scope="row"></th>
+                                    <td></td>
+                                    <td data-role='phone'></td>
+                                    <td><button class="btn btn-info" id="sendbroadcasts" data-message="<?php echo $message; ?>">Bulk Send <i class="fa fa-envelope"></i></button></td>
+                                </tr>                
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              </div>
+            </div>
         </div>
     </div>
+
+    <div class="modal fade" id="addModal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Add <span data-fill='name'></span></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <p>Modal body text goes here.</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+        </div>
     </div>
 
     <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
@@ -153,6 +218,12 @@
 
             $('#addModal').modal('show')
         })
+
+
+        $(".locElem").on('click', function(){
+            $('#locModal').modal('show')
+        })
+
         function fillin(parent, child, data){
             elems = $(parent).find("span[data-fill="+child+"]");
             log(elems)
