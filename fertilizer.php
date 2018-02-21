@@ -11,36 +11,35 @@
         <link rel="stylesheet" type="text/css" href="css/facss/font-awesome.min.css">
         <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="css/style.css">
-        <title>Fat'Isuka</title>
+        <title>Marinzara</title>
     </head>
     <?php
         include 'admin/db.php';
         include_once "functions.php";
-
     ?>
 <body>
     <div class="page">
+        <div class="mt-3"></div>
         <div class="container">
-            <div class="mt-3"></div>
             <div class="row">
-                <div class="col-md-8">
+                <div class="col-md-12">
                     <div class="card">
                         <div class="card-block card-body">
-                            <div class="card-title text-center mod-title">Fields and Alerts</div>
+                            <div class="card-title mod-title text-center">Fertilizer supply requests</div>
                             <table class="table">
                                 <thead>
                                     <tr>
                                       <th scope="col">#</th>
-                                      <th scope="col">Owner Name</th>
-                                      <th scope="col">Phone</th>
-                                      <th scope="col">Message</th>
-                                      <!-- <th scope="col">Send now</th> -->
+                                      <th scope="col">Field owner</th>
+                                      <th scope="col">Fertilizer</th>
+                                      <th scope="col">Quantity</th>
+                                      <th scope="col">Date needed</th>
                                     </tr>
                                 </thead>
                                 <tbody>                            
                                 <?php
                                     $fields = array();
-                                    $query = $conn->query("SELECT * FROM fields WHERE ownerId = 1 ") or die("error getting fields $conn->error");
+                                    $query = $conn->query("SELECT * FROM field_fertilizer JOIN fertilizer ON field_fertilizer.fertilizer = fertilizer.id JOIN fields ON field_fertilizer.field = fields.id ") or die("error getting fields $conn->error");
                                     $n = 0;
                                     while ($data = $query->fetch_assoc()) {
                                         $fields[$data['id']] = $data;
@@ -56,74 +55,49 @@
                                         <tr data-message="<?php echo $message; ?>" data-phone="<?php echo $data['phone']; ?>">
                                           <th scope="row"><?php echo $n+1; ?></th>
                                           <td><?php echo $data['ownerName']; ?></td>
-                                          <td data-role='phone'><?php echo $data['phone']; ?></td>
-                                          <td><?php echo substr($message, 0, 15) ?>..</td>
-                                          <!-- <td><button class="btn btn-info" >Send <i class="fa fa-envelope"></i></button></td> -->
+                                          <td data-role='phone'><?php echo $data['name']; ?></td>
+                                          <td><?php echo $data['quantity']; ?> kg</td>
+                                          <td><?php echo $data['date_needed']; ?></td>
                                         </tr>
                                         <?php
                                         $n++;
                                     } 
                                 ?>
-                                <tr>
-                                    <th scope="row">+</th>
-                                    <td id="nameInput"><input type="text" name="owner" placeholder="Ownername" class="form-control" /></td>
-                                    <td id="phoneInput"><input type="number" name="phone" placeholder="Phone number" class="form-control" /></td>
-                                    <td><button class="btn btn-default" id="addUser">Add <i class="fa fa-plus"></i></button></td>
-                                </tr> 
                                     <tr>
                                         <th scope="row"></th>
                                         <td></td>
-                                        <td data-role='phone'></td>
-                                        <td><button class="btn btn-info" id="sendbroadcasts" data-message="<?php echo $message; ?>">Bulk Send <i class="fa fa-envelope"></i></button></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td><button class="btn btn-info" id="sendbroadcasts" data-message="<?php echo $message; ?>">Take Requests <i class="fa fa-envelope"></i></button></td>
                                     </tr>                
                                 </tbody>
                             </table>
                         </div>
-                    </div>                   
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="mt-3"></div>
-        <div class="container-fluid menu-stick-footer container-full">
+        <!-- <div class="container-fluid menu-stick-footer container-full">
             <div class="container">
                 <div class="row no-gutters">
                     <div class="col col-4">
                         <div class="menu-item m_active">
-                            <a href="index.php"><span><i class="fa fa-2x fa-dashboard"> </i></span> Home</a>
+                            <a href="index.php"><span><i class="fa fa-2x fa-dashboard"> </i></span> Ubuhinzi</a>
                         </div>
                     </div>
                     <div class="col col-4">
                         <div class="menu-item">
-                            <a href="market.php"><span><i class="fa fa-2x fa-shopping-basket"> </i></span> Resources</a>
+                            <a href="market.php"><span><i class="fa fa-2x fa-shopping-basket"> </i></span> Ubucuruzi</a>
                         </div>
                     </div>
                     <div class="col col-4">
                         <div class="menu-item">
-                            <a href="profile.php"><span><i class="fa fa-2x fa-mobile"> </i></span> USSD</a>
+                            <a href="profile.php"><span><i class="fa fa-2x fa-user"> </i></span> Ibindanga</a>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-    <div class="modal fade" id="addModal">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Add <span data-fill='name'></span></h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <p>Modal body text goes here.</p>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-primary">Save changes</button>
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          </div>
-        </div>
-    </div>
+        </div> -->
     </div>
 
     <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
@@ -141,22 +115,10 @@
                 phone = $(message_elem).data('phone');
 
                 $.post('api/index.php', {action:'send_sms', phone:phone, message:message}, function(data){
-                    console.log(data);
+                    console.log(data)
                 })
             }
         });
-        $("#addUser").on('click', function(){
-            phone = $(this).parents("tr").find("td#phoneInput input").val();
-            name = $(this).parents("tr").find("td#nameInput input").val();
-
-
-
-            $('#addModal').modal('show')
-        })
-        function fillin(parent, child, data){
-            elems = $(parent).find("span[data-fill="+child+"]");
-            log(elems)
-        }
 
         function log(data){
             console.log(data)

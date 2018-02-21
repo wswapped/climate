@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 20, 2018 at 06:33 AM
+-- Generation Time: Feb 21, 2018 at 05:59 AM
 -- Server version: 10.1.28-MariaDB
 -- PHP Version: 7.1.11
 
@@ -80,6 +80,14 @@ CREATE TABLE `fertilizer` (
   `quality` varchar(32) DEFAULT NULL COMMENT 'like 17-17-12'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `fertilizer`
+--
+
+INSERT INTO `fertilizer` (`id`, `name`, `quality`) VALUES
+(1, 'NPK', '17-17-17'),
+(2, 'Ammonia Nitrate', '12');
+
 -- --------------------------------------------------------
 
 --
@@ -122,6 +130,13 @@ CREATE TABLE `field_fertilizer` (
   `quantity` int(11) NOT NULL,
   `date_needed` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `field_fertilizer`
+--
+
+INSERT INTO `field_fertilizer` (`id`, `field`, `fertilizer`, `quantity`, `date_needed`) VALUES
+(1, 3, 2, 1, '2018-02-22');
 
 -- --------------------------------------------------------
 
@@ -176,7 +191,8 @@ CREATE TABLE `messages` (
 --
 
 INSERT INTO `messages` (`id`, `name`, `text`) VALUES
-(1, 'now', 'Mwiriwe $name,\r\nUyu munsi hakenewe $litters\r\nndetse n\'ifumbire ibiro $fert_kg bya NPK 17-17-17\r\n\r\n$date_today');
+(1, 'now', 'Mwiriwe $name,\r\nUyu munsi hakenewe litiro $litters\r\nndetse n\'ifumbire ibiro $fert_kg bya NPK 17-17-17\r\n\r\n$date_today'),
+(2, 'predict', 'Mwiriwe $name,\r\nKu itariki ya $date_predict hakenewe litiro $litters\r\nndetse n\'ifumbire ibiro $fert_kg bya NPK 17-17-17\r\n\r\n$date_today');
 
 -- --------------------------------------------------------
 
@@ -442,7 +458,7 @@ ALTER TABLE `family`
 -- AUTO_INCREMENT for table `fertilizer`
 --
 ALTER TABLE `fertilizer`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `fields`
@@ -454,7 +470,7 @@ ALTER TABLE `fields`
 -- AUTO_INCREMENT for table `field_fertilizer`
 --
 ALTER TABLE `field_fertilizer`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `field_messages`
@@ -472,7 +488,7 @@ ALTER TABLE `irrigation`
 -- AUTO_INCREMENT for table `messages`
 --
 ALTER TABLE `messages`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `message_send_logs`
