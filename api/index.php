@@ -110,6 +110,30 @@
 				$sms = sendsms($phone, $message);
 				var_dump($sms);
 			}
+		}else if($action == 'add_user'){
+			//Setting user to the subscriptions
+			$phone = $request['phone']??0;
+			$name = $request['name']??"";
+			$location = $request['location'];
+
+			//Intro message
+			$mq = $conn->query("SELECT * FROM messages WHERE name = 'location' LIMIT 1");
+			$md = $mq->fetch_assoc();
+			$ms = $md['text'];
+
+			$message = str_ireplace("\$name", $name, str_ireplace("\$date_today", date("D-M-Y"), 
+                                            str_ireplace("\$fert_kg", rand(6, 9), str_ireplace("\$temperature", rand(19, 24), $ms))));
+
+			if($phone && $name){
+				//Adding user
+				$sms = sendsms($phone, $message);
+				$query = $conn->query("INSERT INTO location_subscribers(location, username, phone, subscribed) VALUES(\"$location\", \"$name\", \"$phone\", 'true')  ");
+				if($query){
+					$response = array("status"=>true);
+				}else{
+					$response = array("status"=>false, 'msg database error $db->error');
+				}
+			}
 		}else{
 			$response = array("status"=>0, 'error'=>'Action specified is unrecognized');
 		}

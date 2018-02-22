@@ -34,7 +34,9 @@
 		$query = $conn->query("SELECT * FROM field_messages JOIN messages ON field_messages.message = messages.id WHERE field_messages.field = \"$field\" LIMIT 1");
 		return $query->fetch_assoc();
 	}
-
+    function get_fields($user){
+        
+    }
 	function sendsms($phone, $message, $subject=""){
         $recipients     = $phone;
         $data = array(

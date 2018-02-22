@@ -53,7 +53,7 @@
                                         $message = str_ireplace("\$name", $ownerName, str_ireplace("\$litters", rand(10, 20), 
                                             str_ireplace("\$fert_kg", rand(6, 9), $nmessage)));
                                         ?>
-                                        <tr class="locElem">
+                                        <tr class="locElem" data-location="<?php echo $data['name']; ?>">
                                           <th scope="row"><?php echo $n+1; ?></th>
                                           <td><?php echo $data['name']; ?></td>
                                           <td><?php echo $data['crops']; ?></td>
@@ -70,7 +70,7 @@
                                         <td data-role='phone'></td>
                                         <td></td>
                                         <td><button class="btn btn-info" id="sendbroadcasts" data-message="<?php echo $message; ?>">Confirm <i class="fa fa-check"></i></button></td>
-                                    </tr>                
+                                    </tr>             
                                 </tbody>
                             </table>
                         </div>
@@ -152,21 +152,21 @@
                                 <td id="phoneInput"><input type="number" name="phone" placeholder="Phone number" class="form-control" /></td>
                                 <td><button class="btn btn-default" id="addUser">Add <i class="fa fa-plus"></i></button></td>
                             </tr> 
-                                <tr>
-                                    <th scope="row"></th>
-                                    <td></td>
-                                    <td data-role='phone'></td>
-                                    <td><button class="btn btn-info" id="sendbroadcasts" data-message="<?php echo $message; ?>">Bulk Send <i class="fa fa-envelope"></i></button></td>
-                                </tr>                
+                            <tr>
+                                <th scope="row"></th>
+                                <td></td>
+                                <td data-role='phone'></td>
+                                <td><button class="btn btn-info" id="sendbroadcasts" data-message="<?php echo $message; ?>">Bulk Send <i class="fa fa-envelope"></i></button></td>
+                            </tr>                
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
-              <div class="modal-footer">
+              <!-- <div class="modal-footer">
                 <button type="button" class="btn btn-primary">Save changes</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              </div>
+              </div> -->
             </div>
         </div>
     </div>
@@ -215,12 +215,21 @@
             name = $(this).parents("tr").find("td#nameInput input").val();
 
 
+            $.post("api/index.php", {action:'add_user', 'name':name, 'phone':phone, 'location':chose_loc}, function(data){
+                ret = JSON.parse();
+                log(ret);
+            })
+
+            // $.post('api/index.php', {'action':'add_user', 'name':name: 'phone':phone}, function($data){
+            //     // ret = JSON.parse(data);
+            // })
 
             $('#addModal').modal('show')
         })
 
 
         $(".locElem").on('click', function(){
+            chose_loc = $(this).data('location');
             $('#locModal').modal('show')
         })
 
