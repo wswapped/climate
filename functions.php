@@ -34,8 +34,14 @@
 		$query = $conn->query("SELECT * FROM field_messages JOIN messages ON field_messages.message = messages.id WHERE field_messages.field = \"$field\" LIMIT 1");
 		return $query->fetch_assoc();
 	}
-    function get_fields($user){
-        
+    function get_fields($farmer){
+        global $conn;
+        $query = $conn->query("SELECT * FROM fields JOIN farmer ON fields.owner = farmer.id WHERE farmer.id = $farmer ") or die("can't get user fields $conn->error");
+        $fields = array();
+        while ($data = $query->fetch_assoc()) {
+            $fields[] = $data;
+        }
+        return $fields;
     }
 	function sendsms($phone, $message, $subject=""){
         $recipients     = $phone;

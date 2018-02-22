@@ -58,7 +58,7 @@
                                           <td><?php echo $data['name']; ?></td>
                                           <td><?php echo $data['crops']; ?></td>
                                           <td><?php echo $data['quantity']; ?></td>
-                                          <td>Notified</td>
+                                          <td class="text-info">Not notified</td>
                                         </tr>
                                         <?php
                                         $n++;
@@ -94,7 +94,7 @@
                     </div>
                     <div class="col col-4">
                         <div class="menu-item">
-                            <a href="profile.php"><span><i class="fa fa-2x fa-mobile"> </i></span> USSD</a>
+                            <a href="ussd"><span><i class="fa fa-2x fa-mobile"> </i></span> USSD</a>
                         </div>
                     </div>
                 </div>
@@ -112,11 +112,10 @@
                         <table class="table">
                             <thead>
                                 <tr>
-                                  <th scope="col">#</th>
-                                  <th scope="col">Owner Name</th>
-                                  <th scope="col">Phone</th>
-                                  <th scope="col">Message</th>
-                                  <!-- <th scope="col">Send now</th> -->
+                                	<th scope="col">#</th>
+                                	<th scope="col">Owner Name</th>
+                                	<th scope="col">Phone</th>
+                                	<th scope="col">Message</th>
                                 </tr>
                             </thead>
                             <tbody>                            
@@ -152,12 +151,12 @@
                                 <td id="phoneInput"><input type="number" name="phone" placeholder="Phone number" class="form-control" /></td>
                                 <td><button class="btn btn-default" id="addUser">Add <i class="fa fa-plus"></i></button></td>
                             </tr> 
-                            <tr>
+                            <!-- <tr>
                                 <th scope="row"></th>
                                 <td></td>
                                 <td data-role='phone'></td>
                                 <td><button class="btn btn-info" id="sendbroadcasts" data-message="<?php echo $message; ?>">Bulk Send <i class="fa fa-envelope"></i></button></td>
-                            </tr>                
+                            </tr> -->                
                             </tbody>
                         </table>
                     </div>

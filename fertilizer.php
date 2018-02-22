@@ -77,27 +77,27 @@
                 </div>
             </div>
         </div>
-        <!-- <div class="container-fluid menu-stick-footer container-full">
+        <div class="container-fluid menu-stick-footer container-full">
             <div class="container">
                 <div class="row no-gutters">
                     <div class="col col-4">
+                        <div class="menu-item">
+                            <a href="index.php"><span><i class="fa fa-2x fa-dashboard"> </i></span> Home</a>
+                        </div>
+                    </div>
+                    <div class="col col-4">
                         <div class="menu-item m_active">
-                            <a href="index.php"><span><i class="fa fa-2x fa-dashboard"> </i></span> Ubuhinzi</a>
+                            <a href="fertilizer.php"><span><i class="fa fa-2x fa-shopping-basket"> </i></span> Resources</a>
                         </div>
                     </div>
                     <div class="col col-4">
                         <div class="menu-item">
-                            <a href="market.php"><span><i class="fa fa-2x fa-shopping-basket"> </i></span> Ubucuruzi</a>
-                        </div>
-                    </div>
-                    <div class="col col-4">
-                        <div class="menu-item">
-                            <a href="profile.php"><span><i class="fa fa-2x fa-user"> </i></span> Ibindanga</a>
+                            <a href="ussd"><span><i class="fa fa-2x fa-mobile"> </i></span> USSD</a>
                         </div>
                     </div>
                 </div>
             </div>
-        </div> -->
+        </div>
     </div>
 
     <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
