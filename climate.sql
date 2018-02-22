@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 21, 2018 at 05:59 AM
+-- Generation Time: Feb 22, 2018 at 10:12 AM
 -- Server version: 10.1.28-MariaDB
 -- PHP Version: 7.1.11
 
@@ -71,6 +71,28 @@ INSERT INTO `family` (`id`, `name`, `gender`, `birth_year`, `system`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `farmer`
+--
+
+CREATE TABLE `farmer` (
+  `id` int(11) NOT NULL,
+  `name` varchar(128) NOT NULL,
+  `phone` varchar(32) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `farmer`
+--
+
+INSERT INTO `farmer` (`id`, `name`, `phone`) VALUES
+(1, 'MUHIRWA Clement', '0781673265'),
+(2, 'Hak Placide', '0788377874'),
+(3, 'Isaac', '0784589841'),
+(4, 'ds', '121');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `fertilizer`
 --
 
@@ -98,6 +120,7 @@ CREATE TABLE `fields` (
   `id` int(11) NOT NULL,
   `ownerName` varchar(128) NOT NULL,
   `location` varchar(256) NOT NULL,
+  `owner` int(11) NOT NULL,
   `purpose` varchar(1024) NOT NULL,
   `phone` varchar(1024) DEFAULT NULL,
   `locationName` varchar(256) NOT NULL,
@@ -112,10 +135,10 @@ CREATE TABLE `fields` (
 -- Dumping data for table `fields`
 --
 
-INSERT INTO `fields` (`id`, `ownerName`, `location`, `purpose`, `phone`, `locationName`, `ownerId`, `type`, `width`, `stages`, `total_produce`) VALUES
-(1, 'MUHIRWA Clement', 'lat: -1.9563910, lng: 30.0919184', 'umuryango', '0781673265', 'Rugando, Kigali, Rwanda', 1, 'uhendutse', 10, 3, 1),
-(3, 'Isaac', 'lat: -1.961256, lng: 30.069435', 'umuryango no gucuruza', '0784589841', 'Kiyovu, Kigali, Rwanda', 1, 'akandare', 1000, 6, 20),
-(1032, 'Placide', 'lat: -1.945821, lng: 30.078459', 'gucuruza', '0781673265', 'Kimihurura, Kigali, Rwanda', 1, 'ugezweho', 1500, 6, 27);
+INSERT INTO `fields` (`id`, `ownerName`, `location`, `owner`, `purpose`, `phone`, `locationName`, `ownerId`, `type`, `width`, `stages`, `total_produce`) VALUES
+(1, 'MUHIRWA Clement', 'lat: -1.9563910, lng: 30.0919184', 1, 'umuryango', '0781673265', 'Rugando, Kigali, Rwanda', 1, 'uhendutse', 10, 3, 1),
+(3, 'Isaac', 'lat: -1.961256, lng: 30.069435', 1, 'umuryango no gucuruza', '0784589841', 'Kiyovu, Kigali, Rwanda', 1, 'akandare', 1000, 6, 20),
+(1032, 'Placide', 'lat: -1.945821, lng: 30.078459', 1, 'gucuruza', '0781673265', 'Kimihurura, Kigali, Rwanda', 1, 'ugezweho', 1500, 6, 27);
 
 -- --------------------------------------------------------
 
@@ -177,6 +200,53 @@ CREATE TABLE `irrigation` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `locations`
+--
+
+CREATE TABLE `locations` (
+  `id` int(11) NOT NULL,
+  `name` varchar(128) NOT NULL,
+  `crops` varchar(1024) NOT NULL,
+  `quantity` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `locations`
+--
+
+INSERT INTO `locations` (`id`, `name`, `crops`, `quantity`) VALUES
+(1, 'Rwinkwavu', 'Imyumbati, Amasaka, Ibishyimbo', 12),
+(2, 'Cyuve', 'Ibirayi, Ibigori, Umuceri', 21);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `location_subscribers`
+--
+
+CREATE TABLE `location_subscribers` (
+  `id` int(11) NOT NULL,
+  `location` int(11) NOT NULL,
+  `user` int(11) NOT NULL,
+  `subscribed` varchar(8) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `location_subscribers`
+--
+
+INSERT INTO `location_subscribers` (`id`, `location`, `user`, `subscribed`) VALUES
+(1, 0, 1, 'true'),
+(2, 0, 0, 'true'),
+(3, 0, 0, 'true'),
+(4, 0, 0, 'true'),
+(5, 0, 0, 'true'),
+(6, 0, 0, 'true'),
+(7, 0, 0, 'true');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `messages`
 --
 
@@ -192,7 +262,8 @@ CREATE TABLE `messages` (
 
 INSERT INTO `messages` (`id`, `name`, `text`) VALUES
 (1, 'now', 'Mwiriwe $name,\r\nUyu munsi hakenewe litiro $litters\r\nndetse n\'ifumbire ibiro $fert_kg bya NPK 17-17-17\r\n\r\n$date_today'),
-(2, 'predict', 'Mwiriwe $name,\r\nKu itariki ya $date_predict hakenewe litiro $litters\r\nndetse n\'ifumbire ibiro $fert_kg bya NPK 17-17-17\r\n\r\n$date_today');
+(2, 'predict', 'Mwiriwe $name,\r\nKu itariki ya $date_predict hakenewe litiro $litters\r\nndetse n\'ifumbire ibiro $fert_kg bya NPK 17-17-17\r\n\r\n$date_today'),
+(3, 'location', 'Mwiriwe $name,\r\nKu itariki ya $date_today hatehanijwe ubushyuhe $temperature, nta mvura iteganijwe.\r\nUku kwezi imvura izagwa, iminsi itatu, izaba ihagije');
 
 -- --------------------------------------------------------
 
@@ -362,6 +433,12 @@ ALTER TABLE `family`
   ADD KEY `family-system` (`system`);
 
 --
+-- Indexes for table `farmer`
+--
+ALTER TABLE `farmer`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `fertilizer`
 --
 ALTER TABLE `fertilizer`
@@ -393,6 +470,18 @@ ALTER TABLE `field_messages`
 -- Indexes for table `irrigation`
 --
 ALTER TABLE `irrigation`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `locations`
+--
+ALTER TABLE `locations`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `location_subscribers`
+--
+ALTER TABLE `location_subscribers`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -455,6 +544,12 @@ ALTER TABLE `family`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT for table `farmer`
+--
+ALTER TABLE `farmer`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
 -- AUTO_INCREMENT for table `fertilizer`
 --
 ALTER TABLE `fertilizer`
@@ -485,10 +580,22 @@ ALTER TABLE `irrigation`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `locations`
+--
+ALTER TABLE `locations`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `location_subscribers`
+--
+ALTER TABLE `location_subscribers`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
 -- AUTO_INCREMENT for table `messages`
 --
 ALTER TABLE `messages`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `message_send_logs`

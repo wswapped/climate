@@ -11,7 +11,7 @@
         <link rel="stylesheet" type="text/css" href="css/facss/font-awesome.min.css">
         <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="css/style.css">
-        <title>Fat'Isuka</title>
+        <title>Fata Isuka</title>
     </head>
     <?php
         include 'admin/db.php';
@@ -100,15 +100,14 @@
                 </div>
             </div>
         </div>
-    </div>
-    
+    </div>    
     <div class="modal fade" id="locModal">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
             <div class="modal-body">
                 <div class="card">
                     <div class="card-block card-body">
-                        <div class="card-title text-center mod-title">Fields and Alerts</div>
+                        <div class="card-title text-center mod-title">Fields and Alerts subscriptions</div>
                         <table class="table">
                             <thead>
                                 <tr>
@@ -118,14 +117,14 @@
                                 	<th scope="col">Message</th>
                                 </tr>
                             </thead>
-                            <tbody>                            
+                            <tbody id="message_table">                            
                             <?php
                                 $fields = array();
-                                $query = $conn->query("SELECT * FROM fields WHERE ownerId = 1 ") or die("error getting fields $conn->error");
-                                $n = 0;
+                                $query = $conn->query("SELECT * FROM farmer") or die("error getting fields $conn->error");
+                                $n = 1;
                                 while ($data = $query->fetch_assoc()) {
                                     $fields[$data['id']] = $data;
-                                    $ownerName = $data['ownerName']??"Muhinzi";
+                                    $ownerName = $data['name']??"Muhinzi";
 
                                     //getting message
                                     $next_message = next_message($data['id']);
@@ -135,37 +134,26 @@
                                         str_ireplace("\$fert_kg", rand(6, 9), $nmessage)));
                                     ?>
                                     <tr data-message="<?php echo $message; ?>" data-phone="<?php echo $data['phone']; ?>">
-                                      <th scope="row"><?php echo $n+1; ?></th>
-                                      <td><?php echo $data['ownerName']; ?></td>
-                                      <td data-role='phone'><?php echo $data['phone']; ?></td>
-                                      <td><?php echo substr($message, 0, 15) ?>..</td>
-                                      <!-- <td><button class="btn btn-info" >Send <i class="fa fa-envelope"></i></button></td> -->
+                                    	<th scope="row"><?php echo $n; ?></th>
+                                    	<td><?php echo $ownerName; ?></td>
+                                    	<td data-role='phone'><?php echo $data['phone']; ?></td>
+                                    	<td><?php echo substr($message, 0, 15) ?>..</td>
                                     </tr>
                                     <?php
                                     $n++;
-                                } 
+                                }
                             ?>
                             <tr>
                                 <th scope="row">+</th>
                                 <td id="nameInput"><input type="text" name="owner" placeholder="Ownername" class="form-control" /></td>
                                 <td id="phoneInput"><input type="number" name="phone" placeholder="Phone number" class="form-control" /></td>
                                 <td><button class="btn btn-default" id="addUser">Add <i class="fa fa-plus"></i></button></td>
-                            </tr> 
-                            <!-- <tr>
-                                <th scope="row"></th>
-                                <td></td>
-                                <td data-role='phone'></td>
-                                <td><button class="btn btn-info" id="sendbroadcasts" data-message="<?php echo $message; ?>">Bulk Send <i class="fa fa-envelope"></i></button></td>
-                            </tr> -->                
+                            </tr>               
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
-              <!-- <div class="modal-footer">
-                <button type="button" class="btn btn-primary">Save changes</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-              </div> -->
             </div>
         </div>
     </div>
@@ -213,15 +201,14 @@
             phone = $(this).parents("tr").find("td#phoneInput input").val();
             name = $(this).parents("tr").find("td#nameInput input").val();
 
+            n = $("#message_table").find('tr').length-1
+            $("#message_table").append("<tr><td>"+n+"</td><td>"+name+"</td><td>"+phone+"</td><td>Broadcast</td></tr>")
+
 
             $.post("api/index.php", {action:'add_user', 'name':name, 'phone':phone, 'location':chose_loc}, function(data){
                 ret = JSON.parse();
                 log(ret);
-            })
-
-            // $.post('api/index.php', {'action':'add_user', 'name':name: 'phone':phone}, function($data){
-            //     // ret = JSON.parse(data);
-            // })
+            });
 
             $('#addModal').modal('show')
         })

@@ -126,6 +126,10 @@
 
 			if($phone && $name){
 				//Adding user
+				$conn->query("INSERT INTO farmer(name, phone) VALUES(\"$name\", \"$phone\")");
+
+				$id = $conn->insert_id
+
 				$sms = sendsms($phone, $message);
 				$query = $conn->query("INSERT INTO location_subscribers(location, username, phone, subscribed) VALUES(\"$location\", \"$name\", \"$phone\", 'true')  ");
 				if($query){
